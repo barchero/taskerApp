@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "files": [
+    "src/ui/main.ts",
+    "src/ui/polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "src/ui/vendor/libs/**/*.js",
+    "node_modules/swiper",
+    "node_modules/dom7",
+    "node_modules/d3-scale",
+    "node_modules/d3-array"
+  ],
+  "exclude": [
+    "src/ui/test.ts",
+    "src/**/*.spec.ts"
+  ]
+}
