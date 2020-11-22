@@ -8,7 +8,7 @@ export class LoginImpl implements Login {
     ) {
     }
 
-    async execute(loginData): Promise<{ token: string }> {
+    async execute(loginData): Promise<{ access_token: string }> {
         return await this.loginRepository.logIn(loginData);
     }
 

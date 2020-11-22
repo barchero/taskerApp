@@ -2,8 +2,18 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
-  production: false
+import {EnvironmentEntity} from '@ui/model/entities/Environment.entity';
+
+export const environment: EnvironmentEntity = {
+  production: false,
+  logoUrl: './assets/img/logo.png',
+  api: {
+    url: 'http://localhost:3000'
+  },
+  i18n: {
+    defaultLang: 'es',
+    availableLangs: ['es']
+  }
 };
 
 /*

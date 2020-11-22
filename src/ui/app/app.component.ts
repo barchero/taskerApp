@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {Event as RouterEvent, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 import {AppService} from './app.service';
-import {LayoutService} from './layout/layout.service';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from '@ui/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,11 @@ import {LayoutService} from './layout/layout.service';
   styles: [':host { display: block; }']
 })
 export class AppComponent {
-  constructor(private router: Router, private appService: AppService, private layoutService: LayoutService) {
+  constructor(
+    private router: Router,
+    private appService: AppService,
+    private translate: TranslateService
+  ) {
     // Subscribe to router events to handle page transition
     this.router.events.subscribe(this.navigationInterceptor.bind(this));
 
@@ -25,6 +30,13 @@ export class AppComponent {
         }`;
       document.head.appendChild(style);
     }
+
+    // ngx-translate initial config
+    translate.addLangs(environment.i18n.availableLangs);
+    translate.setDefaultLang(environment.i18n.defaultLang);
+
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match('/' + environment.i18n.availableLangs.join('|') + '/') ? browserLang : environment.i18n.defaultLang);
   }
 
   private navigationInterceptor(e: RouterEvent) {
@@ -40,9 +52,9 @@ export class AppComponent {
 
     if (e instanceof NavigationEnd || e instanceof NavigationCancel || e instanceof NavigationError) {
       // On small screens collapse sidenav
-      if (this.layoutService.isSmallScreen() && !this.layoutService.isCollapsed()) {
-        setTimeout(() => this.layoutService.setCollapsed(true, true), 10);
-      }
+      // if (this.layoutService.isSmallScreen() && !this.layoutService.isCollapsed()) {
+      //   setTimeout(() => this.layoutService.setCollapsed(true, true), 10);
+      // }
 
       // Remove loading state
       document.body.classList.remove('app-loading');

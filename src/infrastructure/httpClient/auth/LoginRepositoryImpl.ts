@@ -6,8 +6,8 @@ import {HttpClient} from '@angular/common/http';
 export class LoginRepositoryImpl implements LoginRepository {
   constructor(private httpClient: HttpClient) { }
 
-  async logIn(loginData: LogInUser): Promise<{ token: string }> {
-    return await this.httpClient.post<{token: string}>('/auth/login', loginData).toPromise();
+  async logIn(loginData: LogInUser): Promise<{ access_token: string }> {
+    return await this.httpClient.post<{access_token: string}>('/auth/login', loginData).toPromise();
   }
 
   async getLoggedUser(): Promise<AuthUser> {

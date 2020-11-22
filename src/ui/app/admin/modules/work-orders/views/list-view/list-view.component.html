@@ -1,0 +1,17 @@
+<div class="container">
+  <app-list *ngIf="workOrders" [workOrders]="workOrders.items"></app-list>
+
+
+  <div class="row"*ngIf="workOrders">
+    <div class="col-sm pt-3">
+      <ngb-pagination
+        [collectionSize]="workOrders.meta.totalItems"
+        [pageSize]="workOrders.meta.itemsPerPage"
+        [(page)]="workOrders.meta.currentPage"
+        (pageChange)="pageChanged()"
+        [maxSize]="10"
+        size="sm"
+        class="d-flex justify-content-center justify-content-sm-end m-0"></ngb-pagination>
+    </div>
+  </div>
+</div>
