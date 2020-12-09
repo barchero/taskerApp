@@ -11,26 +11,23 @@ import {Pagination} from '@domain/pagination/entities/Pagination';
 export class ListViewComponent implements OnInit {
 
   workOrders: Pagination<ShortWorkOrder>;
+  sort: {
+    sortBy: keyof ShortWorkOrder | string
+    sortDesc: boolean
+  };
 
-  constructor(private workOrdersListService: WorkOrdersListService) { }
-
-  pageChanged() {
-    const subscription = this.workOrdersListService.list({
-      pagination: {
-        page: this.workOrders.meta.currentPage,
-        limit: this.workOrders.meta.itemsPerPage
-      }
-    })
-      .subscribe((res) => {
-        this.workOrders = res;
-        subscription.unsubscribe();
-      }, () => {
-        subscription.unsubscribe();
-      });
+  constructor(private workOrdersListService: WorkOrdersListService) {
+    this.sort = {
+      sortBy: 'id',
+      sortDesc: true
+    };
   }
 
-  ngOnInit(): void {
+  loadWorkOrders() {
     const subscription = this.workOrdersListService.list({
+      orderBy: {
+        [this.sort.sortBy]: this.sort.sortDesc ? 'DESC' : 'ASC'
+      },
       pagination: {
         page: this.workOrders?.meta.currentPage | 1,
         limit: this.workOrders?.meta.itemsPerPage | 10
@@ -42,6 +39,19 @@ export class ListViewComponent implements OnInit {
       }, () => {
         subscription.unsubscribe();
       });
+  }
+
+  update() {
+    this.workOrders.meta.currentPage = 1;
+    this.loadWorkOrders();
+  }
+
+  pageChanged() {
+    this.loadWorkOrders();
+  }
+
+  ngOnInit(): void {
+    this.loadWorkOrders();
   }
 
 }

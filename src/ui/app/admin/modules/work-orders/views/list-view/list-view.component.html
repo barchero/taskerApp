@@ -1,8 +1,13 @@
 <div class="container">
-  <app-list *ngIf="workOrders" [workOrders]="workOrders.items"></app-list>
+  <app-list
+    *ngIf="workOrders"
+    [workOrders]="workOrders.items"
+    [sort]="sort"
+    (update)="update()"
+  ></app-list>
 
 
-  <div class="row"*ngIf="workOrders">
+  <div class="row" *ngIf="workOrders">
     <div class="col-sm pt-3">
       <ngb-pagination
         [collectionSize]="workOrders.meta.totalItems"
